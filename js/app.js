@@ -1,8 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
+import {getTasks} from "./api/tasks";
+import NewTask from "./components/NewTask";
+import Task from "./components/Task";
 
-function App() {
-  return <h1>Hello World</h1>
-}
+const App = () => {
+  const [tasks, setTasks] = useState([]);
+
+  const handleGetTask = tasks => {
+      setTasks(tasks)
+  }
+        
+    useEffect(() => {
+        getTasks(setTasks);
+    },[]);
+    
+
+    const handleAdd = (newTask) => {
+        setTasks(...tasks, newTask);
+        //TODO send task to DB
+    }
+
+    const handleRemove = (id) => {
+        setTasks(tasks.filter((task) => task.id !== id));
+        //TODO remove from db
+    }
+    
+    return (
+        <>
+            <NewTask onAdd={handleAdd}/>
+            { tasks.map((el, index) => <Task key={index} passedTask={el} onRemove={handleRemove} />) }
+        </>
+    );
+};
 
 ReactDOM.render(<App/>, document.querySelector("#app"));

@@ -5,11 +5,13 @@ const NewTask = ({onAdd}) => {
     const [title, propsTitle] = useInput("");
     const [description, propsDescription] = useInput("");
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         onAdd({
             title,
-            description
+            description,
+            status: "open",
+            addedDate: new Date().toLocaleString(),
         })
     }
 

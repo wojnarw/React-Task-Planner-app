@@ -6,10 +6,6 @@ import Task from "./components/Task";
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
-
-  const handleGetTask = tasks => {
-      setTasks(tasks)
-  }
         
     useEffect(() => {
         getTasks(setTasks);
@@ -17,18 +13,20 @@ const App = () => {
     
 
     const handleAdd = (newTask) => {
-        setTasks(...tasks, newTask);
+        setTasks([...tasks, newTask]);
         //TODO send task to DB
     }
 
     const handleRemove = (id) => {
-        setTasks(tasks.filter((task) => task.id !== id));
+        //setTasks(tasks.filter((task) => task.id !== id));
         //TODO remove from db
     }
     
     return (
         <>
-            <NewTask onAdd={handleAdd}/>
+            <NewTask onAdd={handleAdd}/> 
+            {console.log("tasks:")}
+            {console.log(tasks)}
             { tasks.map((el, index) => <Task key={index} passedTask={el} onRemove={handleRemove} />) }
         </>
     );

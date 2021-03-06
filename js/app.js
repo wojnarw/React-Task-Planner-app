@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import {getTasks} from "./api/tasks";
+import { getTasks, addTask } from "./api/tasks";
 import NewTask from "./components/NewTask";
 import Task from "./components/Task";
 
@@ -11,9 +11,11 @@ const App = () => {
         getTasks(setTasks);
     },[]);
     
+    const addTask2 = (newTask) => setTasks([...tasks, newTask]);
+
     const handleAdd = (newTask) => {
-        setTasks([...tasks, newTask]);
-        //TODO send task to DB
+        addTask(newTask, addTask2);
+        // const taskWithId = addTask(newTask);
     }
 
     const handleRemove = (id) => {

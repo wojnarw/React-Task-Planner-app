@@ -13,13 +13,16 @@ const NewTask = ({onAdd}) => {
             status: "open",
             addedDate: new Date().toLocaleString(),
         })
+        return false;
     }
+
+    // const handleClick = (e) => e.preventDefault();
 
     return (
         <div className="card shadow">
             <div className="card-body">
                 <h1 className="card-title">New task</h1>
-                <form onSubmit={handleSubmit}>
+                <form>
                     <div className="form-group">
                         <input type="text"
                             className="form-control"
@@ -32,7 +35,7 @@ const NewTask = ({onAdd}) => {
                             name="description"
                             placeholder="Description" {...propsDescription}/>
                     </div>
-                    <button className="btn btn-info">
+                    <button onClick={handleSubmit} className="btn btn-info">
                         Add task
                         <i className="fas fa-plus-circle ml-1"></i>
                     </button>

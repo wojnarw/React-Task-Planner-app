@@ -24,3 +24,7 @@ export const getOperations = async (id, successCallback) => {
       console.log(err);
     }
   };
+
+  export const addOperation = operation => {
+      return 1;
+  }

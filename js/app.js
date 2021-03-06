@@ -11,23 +11,31 @@ const App = () => {
         getTasks(setTasks);
     },[]);
     
-
     const handleAdd = (newTask) => {
         setTasks([...tasks, newTask]);
         //TODO send task to DB
     }
 
     const handleRemove = (id) => {
-        //setTasks(tasks.filter((task) => task.id !== id));
+        setTasks(tasks.filter((task) => task.id !== id));
         //TODO remove from db
+    }
+
+    const toggleStatus = (task) => {
+        console.log("tog stat");
+        console.log(task);
+        // {
+        //     title,
+        //     description,
+        //     status: "closed",
+        //     //addedDate: new Date().toLocaleString(),
+        // }
     }
     
     return (
         <>
-            <NewTask onAdd={handleAdd}/> 
-            {console.log("tasks:")}
-            {console.log(tasks)}
-            { tasks.map((el, index) => <Task key={index} passedTask={el} onRemove={handleRemove} />) }
+            <NewTask onAdd={handleAdd}/>
+            { tasks.map((el, index) => <Task key={index} passedTask={el} onRemove={handleRemove} onStatusChange={toggleStatus} />) }
         </>
     );
 };

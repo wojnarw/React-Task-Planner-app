@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import Operations from "./Operations";
 
-const Task = ({passedTask, onRemove}) => {
-    const [task, setTask] = useState(passedTask);
+const Task = ({passedTask, onRemove, onStatusChange}) => {
+    const [task] = useState(passedTask);
     
     return (
         <section className="card mt-5 shadow-sm">
@@ -12,21 +13,27 @@ const Task = ({passedTask, onRemove}) => {
                 </div>
 
                 <div>
-                    <button className="btn btn-info btn-sm mr-2">
-                        Add operation
-                        <i className="fas fa-plus-circle ml-1"></i>
-                    </button>
-                        
-                    <button className="btn btn-dark btn-sm">
-                        Finish
-                        <i className="fas fa-archive ml-1"></i>
-                    </button>
+                    { task.status === "open" && (
+                        <>
+                            <button className="btn btn-info btn-sm mr-2">
+                                Add operation
+                                <i className="fas fa-plus-circle ml-1"></i>
+                            </button>
+                                
+                            <button onClick={()=>onStatusChange(task)} className="btn btn-dark btn-sm">
+                                Finish
+                                <i className="fas fa-archive ml-1"></i>
+                            </button>
+                        </>
+                    )}
 
-                    <button onClick={onRemove(task.id)} className="btn btn-outline-danger btn-sm ml-2">
+                    <button onClick={()=>onRemove(task.id)} className="btn btn-outline-danger btn-sm ml-2">
                         <i className="fas fa-trash false"></i>
                     </button>
                 </div>
             </div>
+
+            <Operations task={task} />
         </section>
     )
 }

@@ -1,4 +1,4 @@
-import {API_KEY, API_URL} from "./api/constants";
+import {API_KEY, API_URL} from "../api/constants";
 
 /**
  * Fetch all operations
@@ -15,7 +15,7 @@ export const getOperations = async (id, successCallback) => {
   
       const data = await response.json();
   
-      if (data.error || typeof successCallback === 'function') {
+      if (data.error || typeof successCallback !== 'function') {
         throw new Error('Błąd!');
       }
   

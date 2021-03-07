@@ -1,15 +1,15 @@
 import React from "react";
 import useInput from "../useInput";
 
-const NewTask = ({onAdd}) => {
+const NewTask = ({onNewTask}) => {
     const [title, propsTitle] = useInput("");
     const [description, propsDescription] = useInput("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onAdd({
-            title,
-            description,
+        onNewTask({
+            tile: title.trim(),
+            description: description.trim(),
             status: "open",
             addedDate: new Date().toLocaleString(),
         })

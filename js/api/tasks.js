@@ -1,6 +1,6 @@
 import {API_KEY, API_URL} from "./constants";
 
-export const getTasks = async (successCallback) => {
+export const getTasksFromDB = async (successCallback) => {
     try {
       const response = await fetch(`${API_URL}/tasks/?authorisation=${API_KEY}`, {
         headers: {
@@ -21,9 +21,8 @@ export const getTasks = async (successCallback) => {
     }
   };
 
-  
-  export const addTask = async (task, successCallback) => {
-    
+
+  export const addTaskToDB = async (task, successCallback) => {
     fetch(`${API_URL}/tasks/`, {
         method: "POST",
         headers: {
@@ -34,15 +33,28 @@ export const getTasks = async (successCallback) => {
     })
     .then(resp => resp.json())
     .then(data => {
-        console.log("data:");
-        console.log(data);
-        console.log("typeof:");
-        console.log(typeof successCallback);
         if (data.error || typeof successCallback !== 'function') {
             throw new Error('Błąd!');
         }
         
         successCallback(data.data);
+    })
+    .catch(err => console.warn(err));
+}
+
+
+export const removeTaskFromDB = (id) => {
+    fetch(`${API_URL}/tasks/${id}`, {
+        method: "DELETE",
+        headers: {
+            Authorization: API_KEY,
+            "Content-Type": "application/json"
+        }
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        if(+data.data.affected !== 1) console.error("Error removing task from DB: " + id);
+        else console.log("removed ok");
     })
     .catch(err => console.warn(err));
 }

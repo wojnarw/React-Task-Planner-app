@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { getTasks, addTask } from "./api/tasks";
+import { getTasksFromDB, addTaskToDB, removeTaskFromDB } from "./api/tasks";
 import NewTask from "./components/NewTask";
 import Task from "./components/Task";
 
@@ -8,19 +8,22 @@ const App = () => {
   const [tasks, setTasks] = useState([]);
         
     useEffect(() => {
-        getTasks(setTasks);
+        getTasksFromDB(setTasks);
     },[]);
     
-    const addTask2 = (newTask) => setTasks([...tasks, newTask]);
+    const addTaskToState = (newTask) => setTasks([...tasks, newTask]);
 
     const handleAdd = (newTask) => {
-        addTask(newTask, addTask2);
-        // const taskWithId = addTask(newTask);
+        addTaskToDB(newTask, addTaskToState);
     }
 
     const handleRemove = (id) => {
-        setTasks(tasks.filter((task) => task.id !== id));
-        //TODO remove from db
+        console.log(id);
+        setTasks(tasks.filter((task) => {
+            console.log(task.id !== id);
+            return task.id !== id
+        }));
+        //removeTaskFromDB(id);
     }
 
     const toggleStatus = (task) => {
@@ -35,8 +38,9 @@ const App = () => {
     }
     
     return (
-        <>
-            <NewTask onAdd={handleAdd}/>
+        <>{
+            console.log(tasks)}
+            <NewTask onNewTask={handleAdd}/>
             { tasks.map((el, index) => <Task key={index} passedTask={el} onRemove={handleRemove} onStatusChange={toggleStatus} />) }
         </>
     );

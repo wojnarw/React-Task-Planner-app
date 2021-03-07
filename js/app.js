@@ -19,11 +19,8 @@ const App = () => {
 
     const handleRemove = (id) => {
         console.log(id);
-        setTasks(tasks.filter((task) => {
-            console.log(task.id !== id);
-            return task.id !== id
-        }));
-        //removeTaskFromDB(id);
+        setTasks(tasks.filter(task => task.id !== id ));
+        removeTaskFromDB(id);
     }
 
     const toggleStatus = (task) => {
@@ -38,8 +35,7 @@ const App = () => {
     }
     
     return (
-        <>{
-            console.log(tasks)}
+        <>
             <NewTask onNewTask={handleAdd}/>
             { tasks.map((el, index) => <Task key={index} passedTask={el} onRemove={handleRemove} onStatusChange={toggleStatus} />) }
         </>

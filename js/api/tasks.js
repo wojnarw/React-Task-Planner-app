@@ -43,7 +43,7 @@ export const getTasksFromDB = async (successCallback) => {
 }
 
 
-export const removeTaskFromDB = (id) => {
+export const removeTaskFromDB = id => {
     fetch(`${API_URL}/tasks/${id}`, {
         method: "DELETE",
         headers: {
@@ -54,7 +54,20 @@ export const removeTaskFromDB = (id) => {
     .then(resp => resp.json())
     .then(data => {
         if(+data.data.affected !== 1) console.error("Error removing task from DB: " + id);
-        else console.log("removed ok");
     })
+    .catch(err => console.warn(err));
+}
+
+
+export const updateTaskInDB = task => {
+    return fetch(`${API_URL}/tasks/${task.id}`, {
+        method: "PUT",
+        headers: {
+            Authorization: API_KEY,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(task)
+    })
+    .then(resp => resp.json().error)
     .catch(err => console.warn(err));
 }

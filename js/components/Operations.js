@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from "react";
-import {getOperations} from "../api/operations";
+import {getOperationsFromDB} from "../api/operations";
 import Operation from "./Operation";
 
-const Operations = ({task}) => {
+const Operations = ({task, hasOperations, form}) => {
     const [operations, setOperations] = useState([]);
 
+    const prepareOperations = async() => {
+        const response = await getOperationsFromDB(task.id);
+        if(response.error) console.warn("Error getting operations from database!");
+        else {
+            setOperations(response.data);
+            hasOperations(response.data.length > 0);
+        }
+    }
+
     useEffect(() => {
-        getOperations(task.id, setOperations);
-        // getOperations(task.id, console.log);
+        prepareOperations();
     },[]);
 
     return (
@@ -15,16 +23,18 @@ const Operations = ({task}) => {
             <div className="card-body">
                 <form>
                     <div className="input-group">
-                    <input type="text"
-                            className="form-control"
-                            placeholder="Operation description"/>
+                        <input type="text"
+                                className="form-control"
+                                placeholder="Operation description"/>
 
-                    <div className="input-group-append">
-                        <button className="btn btn-info">
-                        Add
-                        <i className="fas fa-plus-circle ml-1"></i>
-                        </button>
-                    </div>
+                        { form() &&
+                            <div className="input-group-append">
+                                <button className="btn btn-info">
+                                Add
+                                <i className="fas fa-plus-circle ml-1"></i>
+                                </button>
+                            </div>
+                        }
                     </div>
                 </form>
             </div>

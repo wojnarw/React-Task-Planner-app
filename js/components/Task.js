@@ -2,6 +2,15 @@ import React, { useState } from "react";
 import Operations from "./Operations";
 
 const Task = ({ passedTask, onRemove, onStatusChange }) => {
+    const [isRemovable, setIsRemovable] = useState(false);
+
+    const checkIfRemovable = (condition) => {
+        setIsRemovable(!condition);
+    }
+
+    const setForm = (isVisible) => {
+        return !isVisible;
+    }
 
     return (
         <section className="card mt-5 shadow-sm">
@@ -14,7 +23,7 @@ const Task = ({ passedTask, onRemove, onStatusChange }) => {
                 <div>
                     { passedTask.status === "open" && (
                         <>
-                            <button className="btn btn-info btn-sm mr-2">
+                            <button onClick={setForm} className="btn btn-info btn-sm mr-2">
                                 Add operation
                                 <i className="fas fa-plus-circle ml-1"></i>
                             </button>
@@ -25,14 +34,21 @@ const Task = ({ passedTask, onRemove, onStatusChange }) => {
                             </button>
                         </>
                     )}
-
-                    <button onClick={ ()=> onRemove(passedTask.id) } className="btn btn-outline-danger btn-sm ml-2">
-                        <i className="fas fa-trash false"></i>
-                    </button>
+                    { passedTask.status === "closed" && (
+                        <button onClick={ ()=> onStatusChange(passedTask) } className="btn btn-dark btn-sm">
+                            Restart
+                            <i className="fas fa-archive ml-1"></i>
+                        </button>
+                    )}
+                    { isRemovable &&
+                        <button onClick={ ()=> onRemove(passedTask.id) } className="btn btn-outline-danger btn-sm ml-2">
+                            <i className="fas fa-trash false"></i>
+                        </button>
+                    }
                 </div>
             </div>
 
-            <Operations task={passedTask} />
+            <Operations task={passedTask} hasOperations={checkIfRemovable} form={setForm()} />
         </section>
     )
 }

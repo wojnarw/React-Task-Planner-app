@@ -8,10 +8,9 @@ const NewTask = ({onNewTask}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         onNewTask({
-            tile: title.trim(),
+            title: title.trim(),
             description: description.trim(),
             status: "open",
-            addedDate: new Date().toLocaleString(),
         })
         return false;
     }

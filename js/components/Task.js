@@ -3,13 +3,14 @@ import Operations from "./Operations";
 
 const Task = ({ passedTask, onRemove, onStatusChange }) => {
     const [isRemovable, setIsRemovable] = useState(false);
+    const [showForm, setShowForm] = useState(false);
 
     const checkIfRemovable = (condition) => {
         setIsRemovable(!condition);
     }
 
-    const setForm = (isVisible) => {
-        return !isVisible;
+    const setFormVisibility = () => {
+        setShowForm(prevState => !prevState);
     }
 
     return (
@@ -23,7 +24,7 @@ const Task = ({ passedTask, onRemove, onStatusChange }) => {
                 <div>
                     { passedTask.status === "open" && (
                         <>
-                            <button onClick={setForm} className="btn btn-info btn-sm mr-2">
+                            <button onClick={setFormVisibility} className="btn btn-info btn-sm mr-2">
                                 Add operation
                                 <i className="fas fa-plus-circle ml-1"></i>
                             </button>
@@ -48,7 +49,7 @@ const Task = ({ passedTask, onRemove, onStatusChange }) => {
                 </div>
             </div>
 
-            <Operations task={passedTask} hasOperations={checkIfRemovable} form={setForm()} />
+            <Operations task={passedTask} hasOperations={checkIfRemovable} showForm={showForm} />
         </section>
     )
 }

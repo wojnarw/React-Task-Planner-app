@@ -41,7 +41,7 @@ const Operations = ({ task, hasOperations, showForm }) => {
             }
 
             <ul className="list-group list-group-flush">
-                { operations.map((el, index) => <Operation key={index} passedOperation={el} />) }
+                {operations.map((el, index) => <Operation key={index} passedOperation={el} />)}
                 {/* onRemove={handleRemove} onStatusChange={toggleStatus} />) } */}
             </ul>
         </>

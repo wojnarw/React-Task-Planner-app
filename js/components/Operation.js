@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import Operations from "../api/operations";
 import useInput from "../useInput";
 
 const Operation = ({ passedOperation }) => {

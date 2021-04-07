@@ -1,22 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { getOperationsFromDB } from "../api/operations";
+import React from "react";
 import Operation from "./Operation";
 
-const Operations = ({ task, hasOperations, showForm }) => {
-    const [operations, setOperations] = useState([]);
-
-    const prepareOperations = async () => {
-        const response = await getOperationsFromDB(task.id);
-        if (response.error) console.warn("Error getting operations from database!");
-        else {
-            setOperations(response.data);
-            hasOperations(response.data.length > 0);
-        }
-    }
-
-    useEffect(() => {
-        prepareOperations();
-    }, []);
+const Operations = ({ task, operations, showForm }) => {
+    
 
     return (
         <>
@@ -41,7 +27,7 @@ const Operations = ({ task, hasOperations, showForm }) => {
             }
 
             <ul className="list-group list-group-flush">
-                {operations.map((el, index) => <Operation key={index} passedOperation={el} />)}
+                {operations.map((operation, index) => <Operation key={index} passedOperation={operation} />)}
                 {/* onRemove={handleRemove} onStatusChange={toggleStatus} />) } */}
             </ul>
         </>

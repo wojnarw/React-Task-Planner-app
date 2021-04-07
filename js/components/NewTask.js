@@ -1,21 +1,29 @@
 import React from "react";
 import useInput from "../useInput";
 
-const NewTask = ({onNewTask}) => {
+const NewTask = ({ onNewTask }) => {
     const [title, propsTitle] = useInput("");
     const [description, propsDescription] = useInput("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const newTitle = title.trim();
+        const newDescription = description.trim();
+
+        if (!newTitle || !newDescription) {
+            alert("Podaj tytuł i opis zadania!");
+            return;
+        }
+
         onNewTask({
-            title: title.trim(),
-            description: description.trim(),
+            title: newTitle,
+            description: newDescription,
             status: "open",
         })
+
         return false;
     }
-
-    // const handleClick = (e) => e.preventDefault();
 
     return (
         <div className="card shadow">
@@ -26,13 +34,13 @@ const NewTask = ({onNewTask}) => {
                         <input type="text"
                             className="form-control"
                             name="title"
-                            placeholder="Title" {...propsTitle}/>
+                            placeholder="Title" {...propsTitle} />
                     </div>
                     <div className="form-group">
                         <input type="text"
                             className="form-control"
                             name="description"
-                            placeholder="Description" {...propsDescription}/>
+                            placeholder="Description" {...propsDescription} />
                     </div>
                     <button onClick={handleSubmit} className="btn btn-info">
                         Add task

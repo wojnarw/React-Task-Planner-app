@@ -67,7 +67,7 @@ const Task = ({ task, onRemoveTask }) => {
                 </div>
             </div>
 
-            <Operations task={task} operations={operations} showForm={showForm} />
+            <Operations task={task} operations={operations} setOperations={setOperations} showForm={showForm} />
         </section>
     )
 }

@@ -23,8 +23,6 @@ const Task = ({ task, onRemoveTask }) => {
     }
 
     const toggleStatus = async () => {
-        console.log(task.status);
-        console.log(status);
         let newStatus = (status === "open") ? "closed" : "open";
         const error = await updateTaskInDB({
             ...task,

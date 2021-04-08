@@ -32,7 +32,7 @@ const Operation = ({ passedOperation }) => {
 
     const addTimeToOperation = (e) => {
         e.preventDefault();
-        if(!isNaN(time) && +time > 0) {
+        if(!isNaN(time) && +time !== 0) {
             const updatedOperation = {
                 ...operation,
                 timeSpent: +operation.timeSpent + +time

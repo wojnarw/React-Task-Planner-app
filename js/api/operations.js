@@ -24,6 +24,7 @@ export const addOperationToDB = async (payload, successCallback) => {
         .then(resp => resp.json())
         .then(data => {
             if (data.error || typeof successCallback !== 'function') {
+                console.table(data.data.errors);
                 throw new Error('Błąd!');
             }
             successCallback(data.data);

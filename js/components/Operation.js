@@ -59,7 +59,7 @@ const Operation = ({ passedOperation }) => {
                         {/* <!-- Przycisk widoczny tylko jeżeli status zadania jest "open" --> */}
                         <button onClick={toggleAddTimeForm} className="btn btn-outline-success btn-sm mr-2">
                             Add time
-                    <i className="fas fa-clock ml-1"></i>
+                            <i className="fas fa-clock ml-1"></i>
                         </button>
 
                         <button className="btn btn-outline-danger btn-sm"><i className="fas fa-trash"></i></button>

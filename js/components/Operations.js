@@ -1,19 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { addOperationToDB } from "../api/operations";
 import useInput from "../useInput";
 import Operation from "./Operation";
 
-const Operations = ({ task, operations, setOperations, showForm }) => {
-    const [description, propsDescription] = useInput("");
+const Operations = ({ task, operations, setOperations, showForm, toggleFormVisibility }) => {
+    const [description, propsDescription, setDescription] = useInput("");
     
     const addOperation = (newOperation) => {
-        setOperations(prevState => [...prevState, newOperation])
+        setOperations(prevState => [...prevState, newOperation]);
+        toggleFormVisibility();
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const descriptionTrimmed = description.trim();
-        if(descriptionTrimmed) {
+        if(descriptionTrimmed && descriptionTrimmed.length >= 5) {
             addOperationToDB({
                     taskId: task.id,
                     operation: {
@@ -21,10 +22,11 @@ const Operations = ({ task, operations, setOperations, showForm }) => {
                         timeSpent: 0
                     }
                 },
-                addOperation
+                addOperation,
             );
+            setDescription("");
         }
-        else alert("Podaj nazwę operacji!");
+        else alert("Podaj nazwę operacji, co najmniej 5 znaków.");
     }
 
     return (

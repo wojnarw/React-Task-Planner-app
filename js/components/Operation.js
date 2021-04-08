@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import useInput from "../useInput";
+import { updateOperationInDB } from "../api/operations";
 
 const Operation = ({ passedOperation }) => {
-    const [operation] = useState(passedOperation);
+    const [operation, setOperation] = useState(passedOperation);
     const [showAddTimeForm, setShowAddTimeForm] = useState(false);
-    const [time, propsTime] = useInput("0");
+    const [time, propsTime, setTime] = useInput("0");
 
     const style = {
         width: "12rem"
@@ -21,6 +22,25 @@ const Operation = ({ passedOperation }) => {
 
     const toggleAddTimeForm = () => {
         setShowAddTimeForm(prevState => !prevState);
+        setTime(0);
+    }
+
+    const updateTimeState = (updatedOperation) => {
+        setOperation(updatedOperation);
+        toggleAddTimeForm();
+    }
+
+    const addTimeToOperation = (e) => {
+        e.preventDefault();
+        if(!isNaN(time) && +time > 0) {
+            const updatedOperation = {
+                ...operation,
+                timeSpent: +operation.timeSpent + +time
+            };
+
+            updateOperationInDB(updatedOperation, updateTimeState);
+        }
+        else alert("Podaj czas w minutach!");
     }
 
     return (
@@ -39,7 +59,7 @@ const Operation = ({ passedOperation }) => {
 
                 {/* <!-- Formularz wyświetlany po naciśnięciu "Add time", po zapisie czasu znika --> */}
                 {showAddTimeForm &&
-                    <form>
+                    <form onSubmit={addTimeToOperation}>
                         <div className="input-group input-group-sm">
                             <input type="number"
                                 className="form-control"
@@ -47,7 +67,7 @@ const Operation = ({ passedOperation }) => {
                                 style={style} {...propsTime} />
                             <div className="input-group-append">
                                 <button className="btn btn-outline-success"><i className="fas fa-save"></i></button>
-                                <button className="btn btn-outline-dark"><i className="fas fa-times false"></i></button>
+                                <button type="button" onClick={toggleAddTimeForm} className="btn btn-outline-dark"><i className="fas fa-times false"></i></button>
                             </div>
                         </div>
                     </form>

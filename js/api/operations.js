@@ -12,7 +12,7 @@ export const getOperationsFromDB = (id) => {
 };
 
 
-export const addOperationToDB = async (payload, successCallback) => {
+export const addOperationToDB = (payload, successCallback) => {
     fetch(`${API_URL}/tasks/${payload.taskId}/operations`, {
         method: "POST",
         headers: {
@@ -46,4 +46,23 @@ export const removeOperationFromDB = id => {
             if (+data.data.affected !== 1) console.error("Error removing operation from DB: " + id);
         })
         .catch(err => console.error(err));
+}
+
+export const updateOperationInDB = (operation, successCallback) => {
+    return fetch(`${API_URL}/operations/${operation.id}`, {
+        method: "PUT",
+        headers: {
+            Authorization: API_KEY,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(operation)
+    })
+    .then(data => {
+        if (data.error || typeof successCallback !== 'function') {
+            console.table(data.data.errors);
+            throw new Error('Błąd!');
+        }
+        successCallback(operation);
+    })
+    .catch(err => console.error(err));
 }

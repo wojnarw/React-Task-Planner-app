@@ -25,7 +25,7 @@ const Main = () => {
     return (
         <>
             <NewTask onNewTask={handleAdd} />
-            { tasks.map((task, index) => <Task key={index} task={task} onRemove={handleRemove} />)}
+            { tasks.map((task, index) => <Task key={index} task={task} onRemoveTask={handleRemove} />)}
         </>
     );
 }

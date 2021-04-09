@@ -29,6 +29,10 @@ const Operations = ({ task, operations, setOperations, showForm, toggleFormVisib
         else alert("Podaj nazwę operacji, co najmniej 5 znaków.");
     }
 
+    const onRemoveOperation = (operationToRemove) => {
+        setOperations(operations.filter(operation => operation.id !== operationToRemove.id));
+    }
+
     return (
         <>
             { showForm &&
@@ -54,7 +58,7 @@ const Operations = ({ task, operations, setOperations, showForm, toggleFormVisib
             }
 
             <ul className="list-group list-group-flush">
-                {operations.map((operation, index) => <Operation key={index} passedOperation={operation} />)}
+                {operations.map((operation) => <Operation key={operation.id} passedOperation={operation} onRemoveOperation={onRemoveOperation} />)}
             </ul>
         </>
     )

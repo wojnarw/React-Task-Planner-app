@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import useInput from "../useInput";
 import { updateOperationInDB } from "../api/operations";
 
-const Operation = ({ passedOperation }) => {
+const Operation = ({ passedOperation, onRemoveOperation }) => {
     const [operation, setOperation] = useState(passedOperation);
     const [showAddTimeForm, setShowAddTimeForm] = useState(false);
     const [time, propsTime, setTime] = useInput("0");
@@ -66,7 +66,7 @@ const Operation = ({ passedOperation }) => {
                                 placeholder="Spent time in minutes"
                                 style={style} {...propsTime} />
                             <div className="input-group-append">
-                                <button className="btn btn-outline-success"><i className="fas fa-save"></i></button>
+                                <button type="submit" className="btn btn-outline-success"><i className="fas fa-save"></i></button>
                                 <button type="button" onClick={toggleAddTimeForm} className="btn btn-outline-dark"><i className="fas fa-times false"></i></button>
                             </div>
                         </div>
@@ -82,7 +82,7 @@ const Operation = ({ passedOperation }) => {
                             <i className="fas fa-clock ml-1"></i>
                         </button>
 
-                        <button className="btn btn-outline-danger btn-sm"><i className="fas fa-trash"></i></button>
+                        <button onClick={_ => onRemoveOperation(operation)} className="btn btn-outline-danger btn-sm"><i className="fas fa-trash"></i></button>
                     </div>
                 }
             </li>

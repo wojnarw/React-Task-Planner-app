@@ -1,5 +1,5 @@
 import React from "react";
-import { addOperationToDB } from "../api/operations";
+import { addOperationToDB, removeOperationFromDB } from "../api/operations";
 import useInput from "../useInput";
 import Operation from "./Operation";
 
@@ -30,7 +30,10 @@ const Operations = ({ task, operations, setOperations, showForm, toggleFormVisib
     }
 
     const onRemoveOperation = (operationToRemove) => {
-        setOperations(operations.filter(operation => operation.id !== operationToRemove.id));
+        removeOperationFromDB(
+            operationToRemove.id, 
+            () => setOperations(operations.filter(operation => operation.id !== operationToRemove.id))
+        );
     }
 
     return (

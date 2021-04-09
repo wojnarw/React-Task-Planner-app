@@ -1,6 +1,5 @@
 import { API_KEY, API_URL } from "../api/constants";
 
-
 export const getOperationsFromDB = (id) => {
     return fetch(`${API_URL}/tasks/${id}/operations`, {
         headers: {
@@ -33,7 +32,7 @@ export const addOperationToDB = (payload, successCallback) => {
 }
 
 
-export const removeOperationFromDB = id => {
+export const removeOperationFromDB = (id, successCallback) => {
     fetch(`${API_URL}/operations/${id}`, {
         method: "DELETE",
         headers: {
@@ -43,10 +42,15 @@ export const removeOperationFromDB = id => {
     })
         .then(resp => resp.json())
         .then(data => {
-            if (+data.data.affected !== 1) console.error("Error removing operation from DB: " + id);
+            if (data.error || typeof successCallback !== 'function') {
+                console.table(data.data.errors);
+                throw new Error('Błąd!');
+            }
+            successCallback();
         })
         .catch(err => console.error(err));
 }
+
 
 export const updateOperationInDB = (operation, successCallback) => {
     return fetch(`${API_URL}/operations/${operation.id}`, {

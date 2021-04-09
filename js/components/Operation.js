@@ -32,7 +32,8 @@ const Operation = ({ passedOperation, onRemoveOperation }) => {
 
     const addTimeToOperation = (e) => {
         e.preventDefault();
-        if(!isNaN(time) && +time !== 0) {
+        if(isNaN(time)) alert("Podaj czas w minutach!");
+        else if(+time !== 0 && (+operation.timeSpent + +time) >= 0 ) {
             const updatedOperation = {
                 ...operation,
                 timeSpent: +operation.timeSpent + +time
@@ -40,7 +41,7 @@ const Operation = ({ passedOperation, onRemoveOperation }) => {
 
             updateOperationInDB(updatedOperation, updateTimeState);
         }
-        else alert("Podaj czas w minutach!");
+        else alert("Czas musi być dodatni!");
     }
 
     return (

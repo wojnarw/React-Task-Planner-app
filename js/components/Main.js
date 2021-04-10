@@ -11,7 +11,10 @@ const Main = () => {
         getTasksFromDB(setTasks);
     }, []);
 
-    const addTaskToState = (newTask) => setTasks([...tasks, newTask]);
+    const addTaskToState = (newTask) => {
+        delete newTask.apiKey; // this property causes API server error, when sent
+        setTasks([...tasks, newTask])
+    };
 
     const handleAdd = (newTask) => {
         addTaskToDB(newTask, addTaskToState);

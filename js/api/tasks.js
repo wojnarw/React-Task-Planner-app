@@ -36,7 +36,7 @@ export const addTaskToDB = async (task, successCallback) => {
 			if (data.error || typeof successCallback !== 'function') {
 				throw new Error('Błąd!');
 			}
-
+			
 			successCallback(data.data);
 		})
 		.catch(err => console.warn(err));

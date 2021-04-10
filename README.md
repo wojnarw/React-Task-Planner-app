@@ -1,28 +1,11 @@
-![Coders-Lab-1920px-no-background](https://user-images.githubusercontent.com/152855/73064373-5ed69780-3ea1-11ea-8a71-3d370a5e7dd8.png)
+#  React Todo app with time tracker
 
-# Kilka ważnych informacji
+Application written in Javascript with React lets you add tasks and operations in them. You can set time needed for completing operation. You can also mark task as done.  
+It uses CodersLab REST API for storing data.
+Request API key here: https://todo-api.coderslab.pl/apikey/create
+And paste it in `constants.js` file.
 
-Przed przystąpieniem do rozwiązywania zadań przeczytaj poniższe wskazówki
+![brave_2021-04-09_23-26-15 2](https://user-images.githubusercontent.com/50807860/114253403-5edd8d00-99aa-11eb-9a53-3920c7574a72.png)
 
-## Jak zacząć?
-
-1. Stwórz [*fork*](https://guides.github.com/activities/forking/) repozytorium z zadaniami.
-2. Sklonuj repozytorium na swój komputer. Użyj do tego komendy `git clone adres_repozytorium`
-Adres repozytorium możesz znaleźć na stronie repozytorium po naciśnięciu w guzik "Clone or download".
-3. Rozwiąż zadania i skomituj zmiany do swojego repozytorium. Użyj do tego komend `git add nazwa_pliku`.
-Jeżeli chcesz dodać wszystkie zmienione pliki użyj `git add .` 
-Pamiętaj że kropka na końcu jest ważna!
-Następnie skommituj zmiany komendą `git commit -m "nazwa_commita"`
-4. Wypchnij zmiany do swojego repozytorium na GitHubie.  Użyj do tego komendy `git push origin master`
-5. Stwórz [*pull request*](https://help.github.com/articles/creating-a-pull-request) do oryginalnego repozytorium, gdy skończysz wszystkie zadania.
-
-Poszczególne zadania rozwiązuj w odpowiednich plikach.
-
-### Poszczególne zadania rozwiązuj w odpowiednich plikach.
-
-**Repozytorium z ćwiczeniami zostanie usunięte 2 tygodnie po zakończeniu kursu. Spowoduje to też usunięcie wszystkich forków, które są zrobione z tego repozytorium.**
-
-
-# Warsztat
-
-Napisz aplikację `Todo` wraz z `TimeTrackerem`. Pełen opis zadania znajduje się w artykułach do tego warsztatu.
+# Example usage
+![2021-04-10_03-02-05](https://user-images.githubusercontent.com/50807860/114253280-e5de3580-99a9-11eb-8bdf-725b33586724.gif)

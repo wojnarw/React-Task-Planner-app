@@ -3,7 +3,7 @@ import { addOperationToDB, removeOperationFromDB } from "../api/operations";
 import useInput from "../useInput";
 import Operation from "./Operation";
 
-const Operations = ({ task, operations, setOperations, showForm, toggleFormVisibility, setIsRemovable }) => {
+const Operations = ({ task, operations, setOperations, showForm, toggleFormVisibility, setIsRemovable, status }) => {
     const [description, propsDescription, setDescription] = useInput("");
     
     const addOperation = (newOperation) => {
@@ -68,7 +68,14 @@ const Operations = ({ task, operations, setOperations, showForm, toggleFormVisib
             }
 
             <ul className="list-group list-group-flush">
-                {operations.map((operation) => <Operation key={operation.id} passedOperation={operation} onRemoveOperation={onRemoveOperation} />)}
+                {operations.map((operation) => {
+                    return <Operation 
+                                key={operation.id} 
+                                passedOperation={operation} 
+                                onRemoveOperation={onRemoveOperation} 
+                                status={status}
+                            />
+                })}
             </ul>
         </>
     )

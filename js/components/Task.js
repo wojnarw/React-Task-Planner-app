@@ -13,23 +13,16 @@ const Task = ({ task, onRemoveTask }) => {
         setShowForm(prevState => !prevState);
     }
 
-    const prepareOperations = async () => {
-        const response = await getOperationsFromDB(task.id);
-        if (response.error) console.warn("Error getting operations from database!");
-        else {
-            setOperations(response.data);
-            setIsRemovable(!(response.data.length > 0));
-        }
+    const prepareOperations = () => {
+        getOperationsFromDB(task.id, setOperations, setIsRemovable);
     }
 
-    const toggleStatus = async () => {
-        let newStatus = (status === "open") ? "closed" : "open";
-        const error = await updateTaskInDB({
+    const toggleStatus = () => {
+        const updatedTask = {
             ...task,
-            status: newStatus
-        });
-        if (error) console.error("Error updating task");
-        else setStatus(newStatus);
+            status: (status === "open") ? "closed" : "open"
+        }
+        updateTaskInDB(updatedTask, setStatus);
     }
 
     useEffect(() => {
@@ -72,6 +65,7 @@ const Task = ({ task, onRemoveTask }) => {
                 showForm={showForm} 
                 toggleFormVisibility={toggleFormVisibility} 
                 setIsRemovable={setIsRemovable}
+                status={status}
             />
         </section>
     )

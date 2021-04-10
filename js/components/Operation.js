@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import useInput from "../useInput";
 import { updateOperationInDB } from "../api/operations";
 
-const Operation = ({ passedOperation, onRemoveOperation }) => {
+const Operation = ({ passedOperation, onRemoveOperation, status }) => {
     const [operation, setOperation] = useState(passedOperation);
     const [showAddTimeForm, setShowAddTimeForm] = useState(false);
     const [time, propsTime, setTime] = useInput("0");
@@ -78,10 +78,12 @@ const Operation = ({ passedOperation, onRemoveOperation }) => {
                 {!showAddTimeForm &&
                     <div>
                         {/* <!-- Przycisk widoczny tylko jeżeli status zadania jest "open" --> */}
-                        <button onClick={toggleAddTimeForm} className="btn btn-outline-success btn-sm mr-2">
-                            Add time
-                            <i className="fas fa-clock ml-1"></i>
-                        </button>
+                        { status === "open" &&
+                            <button onClick={toggleAddTimeForm} className="btn btn-outline-success btn-sm mr-2">
+                                Add time
+                                <i className="fas fa-clock ml-1"></i>
+                            </button>
+                        }
 
                         <button onClick={_ => onRemoveOperation(operation)} className="btn btn-outline-danger btn-sm"><i className="fas fa-trash"></i></button>
                     </div>

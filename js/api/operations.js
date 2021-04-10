@@ -1,17 +1,27 @@
 import { API_KEY, API_URL } from "../api/constants";
 
-export const getOperationsFromDB = (id) => {
-    return fetch(`${API_URL}/tasks/${id}/operations`, {
-        headers: {
-            Authorization: API_KEY
-        },
-    })
-        .then(resp => resp.json())
-        .catch(err => console.error(err));
+export const getOperationsFromDB = async (id, successCallback) => {
+	try {
+		const response = await fetch(`${API_URL}/tasks/${id}/operations`, {
+			headers: {
+				Authorization: API_KEY,
+			},
+		});
+
+		const data = await response.json();
+
+		if (data.error || typeof successCallback !== 'function') {
+			throw new Error('Błąd!');
+		}
+
+		successCallback(data.data);
+
+	} catch (err) {
+		console.error(err);
+	}
 };
 
-
-export const addOperationToDB = (payload, successCallback) => {
+export const addOperationToDB = (payload, successCallback, successCallback2) => {
     fetch(`${API_URL}/tasks/${payload.taskId}/operations`, {
         method: "POST",
         headers: {
@@ -27,6 +37,7 @@ export const addOperationToDB = (payload, successCallback) => {
                 throw new Error('Błąd!');
             }
             successCallback(data.data);
+            successCallback2(!(data.data.length > 0));
         })
         .catch(err => console.error(err));
 }

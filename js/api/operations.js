@@ -1,6 +1,6 @@
 import { API_KEY, API_URL } from "../api/constants";
 
-export const getOperationsFromDB = async (id, successCallback) => {
+export const getOperationsFromDB = async (id, successCallback, successCallback2) => {
 	try {
 		const response = await fetch(`${API_URL}/tasks/${id}/operations`, {
 			headers: {
@@ -15,13 +15,14 @@ export const getOperationsFromDB = async (id, successCallback) => {
 		}
 
 		successCallback(data.data);
+        successCallback2(!(data.data.length > 0));
 
 	} catch (err) {
 		console.error(err);
 	}
 };
 
-export const addOperationToDB = (payload, successCallback, successCallback2) => {
+export const addOperationToDB = (payload, successCallback) => {
     fetch(`${API_URL}/tasks/${payload.taskId}/operations`, {
         method: "POST",
         headers: {
@@ -37,7 +38,6 @@ export const addOperationToDB = (payload, successCallback, successCallback2) => 
                 throw new Error('Błąd!');
             }
             successCallback(data.data);
-            successCallback2(!(data.data.length > 0));
         })
         .catch(err => console.error(err));
 }

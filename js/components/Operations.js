@@ -3,7 +3,7 @@ import { addOperationToDB, removeOperationFromDB } from "../api/operations";
 import useInput from "../useInput";
 import Operation from "./Operation";
 
-const Operations = ({ task, operations, setOperations, showForm, toggleFormVisibility }) => {
+const Operations = ({ task, operations, setOperations, showForm, toggleFormVisibility, setIsRemovable }) => {
     const [description, propsDescription, setDescription] = useInput("");
     
     const addOperation = (newOperation) => {
@@ -11,7 +11,7 @@ const Operations = ({ task, operations, setOperations, showForm, toggleFormVisib
         toggleFormVisibility();
     }
 
-    const handleSubmit = (e) => {
+    const handleAdd = (e) => {
         e.preventDefault();
         const descriptionTrimmed = description.trim();
         if(descriptionTrimmed && descriptionTrimmed.length >= 5) {
@@ -25,14 +25,21 @@ const Operations = ({ task, operations, setOperations, showForm, toggleFormVisib
                 addOperation,
             );
             setDescription("");
+            setIsRemovable(false);
         }
         else alert("Podaj nazwę operacji, co najmniej 5 znaków.");
+    }
+
+    const filterOperations = (removalId) => {
+        const updatedOperations = operations.filter(operation => operation.id !== removalId);
+        setOperations(updatedOperations);
+        if(updatedOperations.length === 0) setIsRemovable(true);
     }
 
     const onRemoveOperation = (operationToRemove) => {
         removeOperationFromDB(
             operationToRemove.id, 
-            () => setOperations(operations.filter(operation => operation.id !== operationToRemove.id))
+            removalId => filterOperations(removalId)
         );
     }
 
@@ -41,7 +48,7 @@ const Operations = ({ task, operations, setOperations, showForm, toggleFormVisib
             { showForm &&
                 <div className="card-body">
 
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleAdd}>
                         <div className="input-group">
                             <input type="text"
                                 className="form-control"

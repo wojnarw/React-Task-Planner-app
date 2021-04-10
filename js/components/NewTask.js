@@ -2,8 +2,8 @@ import React from "react";
 import useInput from "../useInput";
 
 const NewTask = ({ onNewTask }) => {
-    const [title, propsTitle] = useInput("");
-    const [description, propsDescription] = useInput("");
+    const [title, propsTitle, setTitle] = useInput("");
+    const [description, propsDescription, setdescription] = useInput("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -22,6 +22,9 @@ const NewTask = ({ onNewTask }) => {
             status: "open",
         })
 
+        setTitle("");
+        setdescription("");
+        
         return false;
     }
 
@@ -29,7 +32,7 @@ const NewTask = ({ onNewTask }) => {
         <div className="card shadow">
             <div className="card-body">
                 <h1 className="card-title">New task</h1>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <input type="text"
                             className="form-control"
@@ -42,7 +45,7 @@ const NewTask = ({ onNewTask }) => {
                             name="description"
                             placeholder="Description" {...propsDescription} />
                     </div>
-                    <button onClick={handleSubmit} className="btn btn-info">
+                    <button type="submit" className="btn btn-info">
                         Add task
                         <i className="fas fa-plus-circle ml-1"></i>
                     </button>

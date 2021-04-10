@@ -46,7 +46,7 @@ export const removeOperationFromDB = (id, successCallback) => {
                 console.table(data.data.errors);
                 throw new Error('Błąd!');
             }
-            successCallback();
+            successCallback(id);
         })
         .catch(err => console.error(err));
 }

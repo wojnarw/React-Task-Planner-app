@@ -4,7 +4,7 @@ import { getOperationsFromDB } from "../api/operations";
 import { updateTaskInDB } from "../api/tasks";
 
 const Task = ({ task, onRemoveTask }) => {
-    const [isRemovable, setIsRemovable] = useState(false);
+    const [isRemovable, setIsRemovable] = useState(true);
     const [showForm, setShowForm] = useState(false);
     const [operations, setOperations] = useState([]);
     const [status, setStatus] = useState(task.status);
@@ -56,7 +56,7 @@ const Task = ({ task, onRemoveTask }) => {
                         {status === "open" ? "Finish" : "Restart"}
                         <i className="fas fa-archive ml-1"></i>
                     </button>
-
+                    
                     {isRemovable &&
                         <button onClick={() => onRemoveTask(task.id)} className="btn btn-outline-danger btn-sm ml-2">
                             <i className="fas fa-trash false"></i>
@@ -65,7 +65,14 @@ const Task = ({ task, onRemoveTask }) => {
                 </div>
             </div>
 
-            <Operations task={task} operations={operations} setOperations={setOperations} showForm={showForm} toggleFormVisibility={toggleFormVisibility} />
+            <Operations 
+                task={task} 
+                operations={operations} 
+                setOperations={setOperations} 
+                showForm={showForm} 
+                toggleFormVisibility={toggleFormVisibility} 
+                setIsRemovable={setIsRemovable}
+            />
         </section>
     )
 }

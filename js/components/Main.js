@@ -1,5 +1,5 @@
-
 import React, { useState, useEffect } from "react";
+import FadeIn from "react-fade-in";
 import { getTasksFromDB, addTaskToDB, removeTaskFromDB } from "../api/tasks";
 import NewTask from "./NewTask";
 import Task from "./Task";
@@ -17,8 +17,8 @@ const Main = () => {
     }, []);
 
     const addTaskToState = (newTask) => {
-        delete newTask.apiKey; // this property, when sent causes API server error
-        setTasks([newTask, ...tasks])
+        delete newTask.apiKey; // this property, when sent to API, causes it's server error
+        setTasks([newTask, ...tasks]);
     };
 
     const handleAdd = (newTask) => {
@@ -33,7 +33,9 @@ const Main = () => {
     return (
         <>
             <NewTask onNewTask={handleAdd} />
-            { tasks.map((task) => <Task key={task.id} id={task.id} task={task} onRemoveTask={handleRemove} />)}
+            <FadeIn delay="100">
+                { tasks.map((task) => <Task key={task.id} id={task.id} task={task} onRemoveTask={handleRemove} />)}
+            </FadeIn>
         </>
     );
 }

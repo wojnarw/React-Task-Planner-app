@@ -7,13 +7,18 @@ import Task from "./Task";
 const Main = () => {
     const [tasks, setTasks] = useState([]);
 
+    const reverseOrderTasks = tasks => {
+        const reversedTasks = tasks.reverse();
+        setTasks(reversedTasks);
+    }
+
     useEffect(() => {
-        getTasksFromDB(setTasks);
+        getTasksFromDB(reverseOrderTasks);
     }, []);
 
     const addTaskToState = (newTask) => {
-        delete newTask.apiKey; // this property causes API server error, when sent
-        setTasks([...tasks, newTask])
+        delete newTask.apiKey; // this property, when sent causes API server error
+        setTasks([newTask, ...tasks])
     };
 
     const handleAdd = (newTask) => {
@@ -28,7 +33,7 @@ const Main = () => {
     return (
         <>
             <NewTask onNewTask={handleAdd} />
-            { tasks.map((task) => <Task key={task.id} task={task} onRemoveTask={handleRemove} />)}
+            { tasks.map((task) => <Task key={task.id} id={task.id} task={task} onRemoveTask={handleRemove} />)}
         </>
     );
 }

@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import useInput from "../useInput";
+import Alert from "@material-ui/lab/Alert";
+import Collapse from "@material-ui/core/Collapse";
 
 const NewTask = ({ onNewTask }) => {
     const [title, propsTitle, setTitle] = useInput("");
     const [description, propsDescription, setdescription] = useInput("");
+    const [showError, setShowError] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -12,7 +15,7 @@ const NewTask = ({ onNewTask }) => {
         const newDescription = description.trim();
 
         if (!newTitle || !newDescription) {
-            alert("Podaj tytuł i opis zadania!");
+            setShowError(true);
             return;
         }
 
@@ -24,7 +27,7 @@ const NewTask = ({ onNewTask }) => {
 
         setTitle("");
         setdescription("");
-        
+        setShowError(false);
         return false;
     }
 
@@ -51,6 +54,10 @@ const NewTask = ({ onNewTask }) => {
                     </button>
                 </form>
             </div>
+
+            <Collapse in={showError}>
+                <Alert severity="error">Please fill in both fields!</Alert>
+            </Collapse>
         </div>
     )
 }

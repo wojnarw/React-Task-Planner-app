@@ -18,6 +18,8 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/lab": "^4.0.0-alpha.58",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-fade-in": "^2.0.1"

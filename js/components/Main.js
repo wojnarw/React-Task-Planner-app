@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import FadeIn from "react-fade-in";
 import { getTasksFromDB, addTaskToDB, removeTaskFromDB } from "../api/tasks";
 import NewTask from "./NewTask";
 import Task from "./Task";
+import { Collapse, Fade } from "@material-ui/core";
 
 const Main = () => {
     const [tasks, setTasks] = useState([]);
@@ -32,10 +32,12 @@ const Main = () => {
 
     return (
         <>
-            <NewTask onNewTask={handleAdd} />
-            <FadeIn delay="100">
+            <Fade in={true}>
+                <NewTask onNewTask={handleAdd} />
+            </Fade>
+            <Collapse in={true}>
                 { tasks.map((task) => <Task key={task.id} id={task.id} task={task} onRemoveTask={handleRemove} />)}
-            </FadeIn>
+            </Collapse>
         </>
     );
 }

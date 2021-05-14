@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { addOperationToDB, removeOperationFromDB } from "../api/operations";
 import useInput from "../useInput";
 import Operation from "./Operation";
+import { Fade, Collapse } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 
 const Operations = ({ task, operations, setOperations, showForm, toggleFormVisibility, setIsRemovable, status }) => {
     const [description, propsDescription, setDescription] = useInput("");
-    
+    const [showError, setShowError] = useState(false);
+
     const addOperation = (newOperation) => {
         setOperations(prevState => [...prevState, newOperation]);
         toggleFormVisibility();
@@ -14,31 +17,32 @@ const Operations = ({ task, operations, setOperations, showForm, toggleFormVisib
     const handleAdd = (e) => {
         e.preventDefault();
         const descriptionTrimmed = description.trim();
-        if(descriptionTrimmed && descriptionTrimmed.length >= 5) {
+        if (descriptionTrimmed && descriptionTrimmed.length >= 5) {
             addOperationToDB({
-                    taskId: task.id,
-                    operation: {
-                        description: descriptionTrimmed, 
-                        timeSpent: 0
-                    }
-                },
+                taskId: task.id,
+                operation: {
+                    description: descriptionTrimmed,
+                    timeSpent: 0
+                }
+            },
                 addOperation,
             );
             setDescription("");
             setIsRemovable(false);
+            setShowError(false);
         }
-        else alert("Podaj nazwę operacji, co najmniej 5 znaków.");
+        else setShowError(true);
     }
 
     const filterOperations = (removalId) => {
         const updatedOperations = operations.filter(operation => operation.id !== removalId);
         setOperations(updatedOperations);
-        if(updatedOperations.length === 0) setIsRemovable(true);
+        if (updatedOperations.length === 0) setIsRemovable(true);
     }
 
     const onRemoveOperation = (operationToRemove) => {
         removeOperationFromDB(
-            operationToRemove.id, 
+            operationToRemove.id,
             removalId => filterOperations(removalId)
         );
     }
@@ -64,19 +68,25 @@ const Operations = ({ task, operations, setOperations, showForm, toggleFormVisib
                             </div>
                         </div>
                     </form>
+                    <Collapse in={showError}>
+                        <Alert severity="error">Operation name needs to be at least 5 characters long!</Alert>
+                    </Collapse>
                 </div>
             }
 
-            <ul className="list-group list-group-flush">
-                {operations.map((operation) => {
-                    return <Operation 
-                                key={operation.id} 
-                                passedOperation={operation} 
-                                onRemoveOperation={onRemoveOperation} 
+            <Fade in={true}>
+                <ul className="list-group list-group-flush">
+                        {operations.map((operation) => (
+                            <Operation
+                                key={operation.id}
+                                passedOperation={operation}
+                                onRemoveOperation={onRemoveOperation}
                                 status={status}
                             />
-                })}
-            </ul>
+                        )
+                        )}
+                </ul>
+            </Fade>
         </>
     )
 }

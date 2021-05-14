@@ -26,8 +26,10 @@ const Main = () => {
     }
 
     const handleRemove = (id) => {
-        removeTaskFromDB(id);
-        setTasks(tasks.filter(task => task.id !== id));
+        removeTaskFromDB(
+            id,
+            () => setTasks(tasks.filter(task => task.id !== id))
+        );
     }
 
     return (

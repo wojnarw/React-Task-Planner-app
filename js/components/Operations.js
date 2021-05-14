@@ -49,9 +49,8 @@ const Operations = ({ task, operations, setOperations, showForm, toggleFormVisib
 
     return (
         <>
-            { showForm &&
+            <Collapse in={showForm}>
                 <div className="card-body">
-
                     <form onSubmit={handleAdd}>
                         <div className="input-group">
                             <input type="text"
@@ -72,7 +71,7 @@ const Operations = ({ task, operations, setOperations, showForm, toggleFormVisib
                         <Alert severity="error">Operation name needs to be at least 5 characters long!</Alert>
                     </Collapse>
                 </div>
-            }
+            </Collapse>
 
             <Fade in={true}>
                 <ul className="list-group list-group-flush">

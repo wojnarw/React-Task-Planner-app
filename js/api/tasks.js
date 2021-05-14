@@ -11,7 +11,7 @@ export const getTasksFromDB = async (successCallback) => {
 		const data = await response.json();
 
 		if (data.error || typeof successCallback !== 'function') {
-			throw new Error('Błąd!');
+			throw new Error('Error getting tasks!');
 		}
 
 		successCallback(data.data);
@@ -34,7 +34,7 @@ export const addTaskToDB = async (task, successCallback) => {
 		.then(resp => resp.json())
 		.then(data => {
 			if (data.error || typeof successCallback !== 'function') {
-				throw new Error('Błąd!');
+				throw new Error('Error adding task!');
 			}
 			
 			successCallback(data.data);
@@ -43,7 +43,7 @@ export const addTaskToDB = async (task, successCallback) => {
 }
 
 
-export const removeTaskFromDB = id => {
+export const removeTaskFromDB = (id, successCallback) => {
 	fetch(`${API_URL}/tasks/${id}`, {
 		method: "DELETE",
 		headers: {
@@ -53,7 +53,10 @@ export const removeTaskFromDB = id => {
 	})
 		.then(resp => resp.json())
 		.then(data => {
-			if (+data.data.affected !== 1) console.error("Error removing task from DB: " + id);
+			if (+data.data.affected !== 1 || typeof successCallback !== 'function') {
+				throw new Error("Error removing task from DB: " + id);
+			}
+			successCallback();
 		})
 		.catch(err => console.warn(err));
 }
@@ -71,7 +74,7 @@ export const updateTaskInDB = (task, successCallback) => {
     .then(data => {
         if (data.error || typeof successCallback !== 'function') {
             console.table(data.data.errors);
-            throw new Error('Błąd!');
+            throw new Error('Error updating task!');
         }
         successCallback(task.status);
     })

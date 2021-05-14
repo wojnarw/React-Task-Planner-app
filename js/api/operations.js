@@ -11,7 +11,7 @@ export const getOperationsFromDB = async (id, successCallback, successCallback2)
 		const data = await response.json();
 
 		if (data.error || typeof successCallback !== 'function') {
-			throw new Error('Błąd!');
+			throw new Error('Error getting operations!');
 		}
 
 		successCallback(data.data);
@@ -35,7 +35,7 @@ export const addOperationToDB = (payload, successCallback) => {
         .then(data => {
             if (data.error || typeof successCallback !== 'function') {
                 console.table(data.data.errors);
-                throw new Error('Błąd!');
+                throw new Error('Error adding operation!');
             }
             successCallback(data.data);
         })
@@ -55,7 +55,7 @@ export const removeOperationFromDB = (id, successCallback) => {
         .then(data => {
             if (data.error || typeof successCallback !== 'function') {
                 console.table(data.data.errors);
-                throw new Error('Błąd!');
+                throw new Error('Error removing operation!');
             }
             successCallback(id);
         })
@@ -75,7 +75,7 @@ export const updateOperationInDB = (operation, successCallback) => {
     .then(data => {
         if (data.error || typeof successCallback !== 'function') {
             console.table(data.data.errors);
-            throw new Error('Błąd!');
+            throw new Error('Error updating operation!');
         }
         successCallback(operation);
     })

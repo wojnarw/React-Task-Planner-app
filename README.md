@@ -2,8 +2,8 @@
 
 Live version on free hosting: https://woj.heliohost.org/  
 
-Application written in Javascript with React, which lets you create and manage tasks and its operations. You can set time needed for completing operation. You can also mark task as done.  
-It uses CodersLab REST API server for storing data.  
+The application is written in Javascript with React.js framework and lets you create and manage tasks and its operations. You can set time needed for completing an operation. You can also mark tasks as done.  
+It uses CodersLab API for storing data.  
 To work, you need to request API key here: https://todo-api.coderslab.pl/apikey/create and paste it in `constants.js` file.  
 Example usage below.  
   
